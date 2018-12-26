@@ -10,7 +10,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 
 " Edit Tools
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround' "Add surrounding quote mark
+Plug 'tomtom/tcomment_vim' "Comment code
+Plug 'easymotion/vim-easymotion' "Goto char
 
 " Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -58,6 +60,13 @@ vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
 " EDITOR CONFIGS
 "========================================================
 set clipboard=unnamed
+set ruler
+set ai "Auto indent
+set number " Show line numbers
+syntax on " Highlight syntax
+set expandtab "Convert tab to spaces
+set bs=2 tabstop=2 shiftwidth=2 softtabstop=2 "Default space number for backspace, tab
+colorscheme monokai "Theme monokai
 
 "========================================================
 " MAPPING NERDTree
@@ -77,6 +86,13 @@ command! -bang -nargs=* AgD
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'), {"dir": expand("%:h")}),
   \                 <bang>0)
 
+"========================================================
+" MAPPING EASYMOTION
+"========================================================
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
 
 
 

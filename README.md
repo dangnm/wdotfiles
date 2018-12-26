@@ -22,7 +22,7 @@ My dotfiles for neo vim
 
 ## Setup nvim folder
 
-    mkdir -p ~/.vim/{plugged,snippets,cache}
+    mkdir -p ~/.vim/{plugged,snippets,cache,colors}
     mkdir -p ~/.cache/{swap,backup,undo}
     touch ~/.cache/NERDTreeBookmarks
 
@@ -46,6 +46,12 @@ My dotfiles for neo vim
 
     # tmux
     ln -sf ~/wdotfiles/tmux.conf ~/.tmux.conf
+
+## Install monokai theme
+    mkdir -p ~/.vim/{colors}
+
+    # For neovim
+    ln -sf ~/wdotfiles/colors/monokai.vim ~/.config/nvim/colors/monokai.vim
 
 ## Start vim and install plugins
 
