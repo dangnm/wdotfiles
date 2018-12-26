@@ -51,6 +51,9 @@ let g:lmap.f.q = ['q', 'Quit']
 let g:lmap.g = { 'name' : 'Git' }
 let g:lmap.g.b = ['Gblame','Blame']
 
+let g:lmap.p = { 'name' : 'Projects' }
+let g:lmap.p.f = ['Files', 'Files search']
+
 let mapleader=" "
 
 call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
