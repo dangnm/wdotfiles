@@ -42,6 +42,7 @@ let g:lmap.h = { 'name' : 'Gitgutter' }
 let g:lmap.f = { 'name' : 'File Menu' }
 let g:lmap.f.n = ['NERDTreeToggle','NERD tree']
 let g:lmap.f.f = ['execute "Files"." ".expand("%:h")','Files in current dir']
+let g:lmap.f.y = ['let @*=expand("%:p") | echo expand("%:p")', 'Copy current path']
 let g:lmap.f.q = ['q', 'Quit']
 
 let g:lmap.g = { 'name' : 'Git' }
@@ -52,6 +53,11 @@ let mapleader=" "
 call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
 nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
+
+"========================================================
+" EDITOR CONFIGS
+"========================================================
+set clipboard=unnamed
 
 "========================================================
 " MAPPING NERDTree
