@@ -13,6 +13,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround' "Add surrounding quote mark
 Plug 'tomtom/tcomment_vim' "Comment code
 Plug 'easymotion/vim-easymotion' "Goto char
+Plug 'w0rp/ale' "Lint/Rubocop
 
 " Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -94,5 +95,23 @@ let g:EasyMotion_smartcase = 1
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
-
-
+" ===========ALE config===============
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+let g:ale_echo_msg_error_str = '✘ Error'
+let g:ale_echo_msg_warning_str = '⚠ Warning'
+let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
+let g:ale_list_window_size = 5
+let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'go': ['gometalinter', 'gofmt']}
+let g:ale_fixers = {
+\   'javascript': [
+\       'prettier',
+\       'eslint',
+\   ],
+\   'ruby': ['rubocop']
+\}
+let g:javascript_plugin_flow = 1
+autocmd BufWritePost *.js,*.jsx,*.py,*.rb ALEFix
+autocmd FileType ruby compiler ruby
