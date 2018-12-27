@@ -44,6 +44,10 @@ My dotfiles for neo vim
     # For neovim
     ln -sf ~/wdotfiles/init.vim ~/.config/nvim/init.vim
 
+    # For vim
+    ln -sf ~/wdotfiles/init.vim ~/.vim/.vimrc
+    ln -sf ~/wdotfiles/init.vim ~/.vimrc
+
     # tmux
     ln -sf ~/wdotfiles/tmux.conf ~/.tmux.conf
 
@@ -56,3 +60,9 @@ My dotfiles for neo vim
 ## Start vim and install plugins
 
     nvim +PlugInstall +qall
+    vim  +PlugInstall +qall
+
+## Uninstall configs
+    unlink ~/.vim/.vimrc
+    unlink ~/.vimrc
+    unlink ~/.config/nvim/init.vim
