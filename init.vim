@@ -49,7 +49,7 @@ call plug#end()
 " Define prefix dictionary
 let g:lmap =  {}
 
-" Second level dictionaries:
+" Multilevel dictionaries:
 let g:lmap.s = { 'name' : 'Search' }
 let g:lmap.s.f = ['Files', 'Files search']
 let g:lmap.s.a = { 'name' : 'Ag search' }
@@ -64,6 +64,7 @@ let g:lmap.f.n = ['call NERDTreeToggleInCurDir()','NERD tree']
 let g:lmap.f.f = ['execute "Files"." ".expand("%:h")','Files in current dir']
 let g:lmap.f.y = ['let @*=expand("%:p") | echo expand("%:p")', 'Copy current path']
 let g:lmap.f.q = ['q', 'Quit']
+let g:lmap.f.Q = ['qa', 'Quit all']
 
 let g:lmap.g = { 'name' : 'Git' }
 let g:lmap.g.b = ['Gblame','Blame']
@@ -71,8 +72,39 @@ let g:lmap.g.b = ['Gblame','Blame']
 let g:lmap.p = { 'name' : 'Projects' }
 let g:lmap.p.f = ['Files', 'Files search']
 
-let g:lmap.t = { 'name' : 'Toggles' }
-let g:lmap.t.a = ['call deoplete#toggle()', 'Auto completion']
+let g:lmap.t = { 'name' : 'Tabs/Toggles' }
+let g:lmap.t.n = ['tab sp', 'New tab']
+let g:lmap.t.l = ['tabnext', 'Next tab']
+let g:lmap.t.h = ['tabprev', 'Previous tab']
+let g:lmap.t.j = ['tabfirst', 'First tab']
+let g:lmap.t.k = ['tablast', 'Last tab']
+let g:lmap.t.c = ['tabclose', 'Close tab']
+let g:lmap.t.1 = ['call feedkeys("1gt")', 'Tab 1']
+let g:lmap.t.2 = ['call feedkeys("2gt")', 'Tab 2']
+let g:lmap.t.3 = ['call feedkeys("3gt")', 'Tab 3']
+let g:lmap.t.4 = ['call feedkeys("4gt")', 'Tab 4']
+let g:lmap.t.t = { 'name' : 'Toggles' }
+let g:lmap.t.t.a = ['call deoplete#toggle()', 'Auto completion']
+
+let g:lmap.w = { 'name' : 'Windows' }
+let g:lmap.w = {
+      \'name' : 'Windows',
+      \'/' : ['vsplit', 'Split window right'],
+      \'s' : ['split', 'Split window bellow'],
+      \'l' : ['call feedkeys("\<C-W>l")', 'Window right'],
+      \'h' : ['call feedkeys("\<C-W>h")', 'Window left'],
+      \'j' : ['call feedkeys("\<C-W>j")', 'Window down'],
+      \'k' : ['call feedkeys("\<C-W>k")', 'Window up'],
+      \'=' : ['call feedkeys("\<C-W>=")', 'Balance windows'],
+      \'d' : ['call feedkeys("\<C-W>c")', 'Close window']
+      \}
+
+let g:lmap.w.r = { 'name' : 'Resize' }
+let g:lmap.w.r.l = ['call feedkeys("\<C-W>\>")', 'Increase width']
+let g:lmap.w.r.h = ['call feedkeys("\<C-W>\<")', 'Decrease width']
+let g:lmap.w.r.k = ['call feedkeys("\<C-W>+")', 'Increase height']
+let g:lmap.w.r.j = ['call feedkeys("\<C-W>-")', 'Decrease height']
+let g:lmap.w.r.m = ['res +1000 | vertical res 100', 'Maximize window size']
 
 let mapleader=" "
 
