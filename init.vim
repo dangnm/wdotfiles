@@ -30,7 +30,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " GIT vim
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify' "Sign column to indicate added, modified and removed lines
 Plug 'tpope/vim-fugitive'
 
 call plug#end()
@@ -93,6 +93,8 @@ if s:CheckPlugged('nerdtree')
     " If NERDTree is open in the current buffer
     if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
       exe ":NERDTreeClose"
+    elseif (expand('%:t') == '')
+      exe ":NERDTreeToggle"
     else
       exe ":NERDTreeFind"
     endif
