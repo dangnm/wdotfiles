@@ -57,8 +57,6 @@ let g:lmap.s.a.a = ['Ag', 'Ag search']
 let g:lmap.s.a.d = ['AgD','Ag current dir']
 let g:lmap.s.b = ['Buffers', 'Buffers']
 
-let g:lmap.h = { 'name' : 'Gitgutter' }
-
 let g:lmap.f = { 'name' : 'File Menu' }
 let g:lmap.f.n = ['call NERDTreeToggleInCurDir()','NERD tree']
 let g:lmap.f.f = ['execute "Files"." ".expand("%:h")','Files in current dir']
