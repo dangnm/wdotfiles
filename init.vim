@@ -6,11 +6,16 @@ call plug#begin('~/.vim/plugged')
 
 " Helpers
 "
+let s:python3 = has('python3')
 let s:show_missing_plugin_warning = 'true'
 function! s:CheckPlugged(plugin) abort
-  if !has_key(g:plugs, a:plugin) && s:show_missing_plugin_warning == 'true'
+  if !s:IsPlugged(a:plugin) && s:show_missing_plugin_warning == 'true'
     echo 'Please install '.a:plugin
   endif
+  return s:IsPlugged(a:plugin)
+endfunction
+
+function! s:IsPlugged(plugin) abort
   return has_key(g:plugs, a:plugin)
 endfunction
 
@@ -24,6 +29,9 @@ Plug 'tpope/vim-surround' "Add surrounding quote mark
 Plug 'tomtom/tcomment_vim' "Comment code
 Plug 'easymotion/vim-easymotion' "Goto char
 Plug 'w0rp/ale' "Lint/Rubocop
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+endif
 
 " Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -62,6 +70,9 @@ let g:lmap.g.b = ['Gblame','Blame']
 
 let g:lmap.p = { 'name' : 'Projects' }
 let g:lmap.p.f = ['Files', 'Files search']
+
+let g:lmap.t = { 'name' : 'Toggles' }
+let g:lmap.t.a = ['call deoplete#toggle()', 'Auto completion']
 
 let mapleader=" "
 
@@ -144,4 +155,11 @@ if s:CheckPlugged('ale')
   let g:javascript_plugin_flow = 1
   autocmd BufWritePost *.js,*.jsx,*.py,*.rb ALEFix
   autocmd FileType ruby compiler ruby
+endif
+
+"========================================================
+" CONFIG DEOPLETE
+"========================================================
+if s:IsPlugged('deoplete.nvim') && s:python3
+  let g:deoplete#enable_at_startup = 1
 endif
