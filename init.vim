@@ -4,6 +4,16 @@
 filetype off
 call plug#begin('~/.vim/plugged')
 
+" Helpers
+"
+let s:show_missing_plugin_warning = 'true'
+function! s:CheckPlugged(plugin) abort
+  if !has_key(g:plugs, a:plugin) && s:show_missing_plugin_warning == 'true'
+    echo 'Please install '.a:plugin
+  endif
+  return has_key(g:plugs, a:plugin)
+endfunction
+
 " General
 Plug 'hecal3/vim-leader-guide'
 Plug 'itchyny/lightline.vim'
@@ -24,7 +34,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 call plug#end()
-
 
 "========================================================
 " MAPPING leader guide
@@ -75,54 +84,62 @@ colorscheme monokai "Theme monokai
 "========================================================
 " MAPPING NERDTree
 "========================================================
-nnoremap <silent> <F9>  :NERDTreeToggle<CR>
-inoremap <silent> <F9>  <Esc>:NERDTreeToggle<CR>
-nnoremap <silent> <F10> :NERDTreeFind<CR>
-inoremap <silent> <F10> <Esc>:NERDTreeFind<CR>
-function! NERDTreeToggleInCurDir()
-  " If NERDTree is open in the current buffer
-  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-    exe ":NERDTreeClose"
-  else
-    exe ":NERDTreeFind"
-  endif
-endfunction
+if s:CheckPlugged('nerdtree')
+  nnoremap <silent> <F9>  :NERDTreeToggle<CR>
+  inoremap <silent> <F9>  <Esc>:NERDTreeToggle<CR>
+  nnoremap <silent> <F10> :NERDTreeFind<CR>
+  inoremap <silent> <F10> <Esc>:NERDTreeFind<CR>
+  function! NERDTreeToggleInCurDir()
+    " If NERDTree is open in the current buffer
+    if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+      exe ":NERDTreeClose"
+    else
+      exe ":NERDTreeFind"
+    endif
+  endfunction
+endif
 
 " ================FZF=================
-let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -l -g ""'
-command! -bang -nargs=* AgD
-  \ call fzf#vim#ag(<q-args>,
-  \                 extend(
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'), {"dir": expand("%:h")}),
-  \                 <bang>0)
+if s:CheckPlugged('fzf')
+  let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git --ignore node_modules -l -g ""'
+  command! -bang -nargs=* AgD
+        \ call fzf#vim#ag(<q-args>,
+        \                 extend(
+        \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+        \                         : fzf#vim#with_preview('right:50%:hidden', '?'), {"dir": expand("%:h")}),
+        \                 <bang>0)
+endif
 
 "========================================================
 " MAPPING EASYMOTION
 "========================================================
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+if s:CheckPlugged('vim-easymotion')
+  let g:EasyMotion_do_mapping = 0
+  let g:EasyMotion_smartcase = 1
+  map / <Plug>(easymotion-sn)
+  omap / <Plug>(easymotion-tn)
+endif
 
 " ===========ALE config===============
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
-let g:ale_echo_msg_error_str = '✘ Error'
-let g:ale_echo_msg_warning_str = '⚠ Warning'
-let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
-let g:ale_list_window_size = 5
-let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'go': ['gometalinter', 'gofmt']}
-let g:ale_fixers = {
-\   'javascript': [
-\       'prettier',
-\       'eslint',
-\   ],
-\   'ruby': ['rubocop']
-\}
-let g:javascript_plugin_flow = 1
-autocmd BufWritePost *.js,*.jsx,*.py,*.rb ALEFix
-autocmd FileType ruby compiler ruby
+if s:CheckPlugged('ale')
+  let g:ale_sign_error = '✘'
+  let g:ale_sign_warning = '⚠'
+  highlight ALEErrorSign ctermbg=NONE ctermfg=red
+  highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+  let g:ale_echo_msg_error_str = '✘ Error'
+  let g:ale_echo_msg_warning_str = '⚠ Warning'
+  let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
+  let g:ale_list_window_size = 5
+  let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'go': ['gometalinter', 'gofmt']}
+  let g:ale_fixers = {
+        \   'javascript': [
+        \       'prettier',
+        \       'eslint',
+        \   ],
+        \   'ruby': ['rubocop']
+        \}
+  let g:javascript_plugin_flow = 1
+  autocmd BufWritePost *.js,*.jsx,*.py,*.rb ALEFix
+  autocmd FileType ruby compiler ruby
+endif
