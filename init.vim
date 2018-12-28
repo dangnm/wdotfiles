@@ -8,6 +8,14 @@ call plug#begin('~/.vim/plugged')
 "
 let s:python3 = has('python3')
 let s:show_missing_plugin_warning = 'true'
+let s:gitdir = substitute(system("git rev-parse --show-toplevel 2>/dev/null"), '\n\+$', '', '')
+
+function! GenerateCTAGS()
+  if (strlen(s:gitdir) > 0)
+    exe '!ctags -R -f '.s:gitdir.'/.git/tags '.s:gitdir
+  endif
+endfunction
+
 function! s:CheckPlugged(plugin) abort
   if !s:IsPlugged(a:plugin) && s:show_missing_plugin_warning == 'true'
     echo 'Please install '.a:plugin
@@ -104,6 +112,10 @@ let g:lmap.w.r.k = ['call feedkeys("\<C-W>+")', 'Increase height']
 let g:lmap.w.r.j = ['call feedkeys("\<C-W>-")', 'Decrease height']
 let g:lmap.w.r.m = ['res +1000 | vertical res 100', 'Maximize window size']
 
+let g:lmap.j = { 'name' : 'Jump' }
+let g:lmap.j.g = ['call GenerateCTAGS()', 'Generate CTAGS']
+let g:lmap.j.t = ['call feedkeys("\<C-]>")', 'To definition']
+
 let mapleader=" "
 
 call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
@@ -121,6 +133,10 @@ syntax on " Highlight syntax
 set expandtab "Convert tab to spaces
 set bs=2 tabstop=2 shiftwidth=2 softtabstop=2 "Default space number for backspace, tab
 colorscheme monokai "Theme monokai
+let g:auto_ctags = 1 "Tags for definition jump
+set notagrelative "Tags for definition jump
+set tags=s:gitdir "Tags for definition jump
+
 
 "========================================================
 " MAPPING NERDTree
