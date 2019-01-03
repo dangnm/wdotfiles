@@ -64,6 +64,7 @@ let g:lmap.s.a = { 'name' : 'Ag search' }
 let g:lmap.s.a.a = ['Ag', 'Ag search']
 let g:lmap.s.a.d = ['AgD','Ag current dir']
 let g:lmap.s.b = ['Buffers', 'Buffers']
+let g:lmap.s.c = ['let @/ = ""', 'Clear highlight']
 
 let g:lmap.f = { 'name' : 'File Menu' }
 let g:lmap.f.n = ['call NERDTreeToggleInCurDir()','NERD tree']
