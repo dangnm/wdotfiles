@@ -29,8 +29,11 @@ endfunction
 
 " General
 Plug 'hecal3/vim-leader-guide'
-Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
+
+" UI
+Plug 'itchyny/lightline.vim' "Bottom statusline
+Plug 'Yggdroot/indentLine' "Display the indention levels with thin vertical lines
 
 " Edit Tools
 Plug 'tpope/vim-surround' "Add surrounding quote mark
@@ -92,6 +95,7 @@ let g:lmap.t.3 = ['call feedkeys("3gt")', 'Tab 3']
 let g:lmap.t.4 = ['call feedkeys("4gt")', 'Tab 4']
 let g:lmap.t.t = { 'name' : 'Toggles' }
 let g:lmap.t.t.a = ['call deoplete#toggle()', 'Auto completion']
+let g:lmap.t.t.i = ['IndentLinesToggle', 'Indent guide']
 
 let g:lmap.w = { 'name' : 'Windows' }
 let g:lmap.w = {
@@ -209,4 +213,14 @@ endif
 "========================================================
 if s:IsPlugged('deoplete.nvim') && s:python3
   let g:deoplete#enable_at_startup = 1
+endif
+
+"========================================================
+" CONFIG INDENT LINE
+"========================================================
+if s:IsPlugged('indentLine')
+    let g:indentLine_enabled              = 0
+    let g:indentLine_showFirstIndentLevel = 1
+    let g:indentLine_noConcealCursor      = 1
+    let g:indentLine_color_term           = 239
 endif
