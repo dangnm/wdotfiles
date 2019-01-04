@@ -56,6 +56,7 @@ My dotfiles for neo vim
 
     # For neovim
     ln -sf ~/wdotfiles/colors/monokai.vim ~/.config/nvim/colors/monokai.vim
+    ln -sf ~/wdotfiles/colors/gruvbox.vim ~/.config/nvim/colors/gruvbox.vim
 
 ## Start vim and install plugins
 
@@ -66,3 +67,5 @@ My dotfiles for neo vim
     unlink ~/.vim/.vimrc
     unlink ~/.vimrc
     unlink ~/.config/nvim/init.vim
+    unlink ~/.config/nvim/colors/monokai.vim
+    unlink ~/.config/nvim/colors/gruvbox.vim

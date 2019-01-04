@@ -138,7 +138,7 @@ set number " Show line numbers
 syntax on " Highlight syntax
 set expandtab "Convert tab to spaces
 set bs=2 tabstop=2 shiftwidth=2 softtabstop=2 "Default space number for backspace, tab
-colorscheme monokai "Theme monokai
+colorscheme gruvbox "Install theme
 let g:auto_ctags = 1 "Tags for definition jump
 set notagrelative "Tags for definition jump
 set tags=s:gitdir "Tags for definition jump
