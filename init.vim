@@ -73,6 +73,7 @@ let g:lmap.f = { 'name' : 'File Menu' }
 let g:lmap.f.n = ['call NERDTreeToggleInCurDir()','NERD tree']
 let g:lmap.f.f = ['execute "Files"." ".expand("%:h")','Files in current dir']
 let g:lmap.f.y = ['let @*=expand("%:p") | echo expand("%:p")', 'Copy current path']
+let g:lmap.f.Y = ['let @*=expand("%:t") | echo expand("%:t")', 'Copy current filename']
 let g:lmap.f.q = ['q', 'Quit']
 let g:lmap.f.Q = ['qa', 'Quit all']
 
