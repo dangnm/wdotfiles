@@ -142,6 +142,11 @@ colorscheme gruvbox "Install theme
 let g:auto_ctags = 1 "Tags for definition jump
 set notagrelative "Tags for definition jump
 set tags=s:gitdir "Tags for definition jump
+set foldmethod=indent     " Fold by indent
+set foldlevel=1           " Starting fold at level 1
+set foldlevelstart=20     " Open all folds by default"
+set foldnestmax=20        " Deepest fold is 20 levels
+set nofoldenable          " Disable fold by default
 
 
 "========================================================
