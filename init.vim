@@ -103,7 +103,7 @@ let g:which_key_map.b = {
 
 let g:which_key_map.f = {
       \ 'name' : 'files'                                            ,
-      \ 'n' : ['NERDTreeToggleInCurDir()'     , 'NERD tree']       ,
+      \ 't' : ['NERDTreeToggleInCurDir()'     , 'NERD tree']       ,
       \ 'f' : ['ListFilesInCurrentDir()'     , 'Files in current dir']       ,
       \ 'y' : ['CopyCurrentPath()'     , 'Copy current path']       ,
       \ 'Y' : ['CopyCurrentFileName()'     , 'Copy current filename']       ,
