@@ -27,8 +27,24 @@ function! s:IsPlugged(plugin) abort
   return has_key(g:plugs, a:plugin)
 endfunction
 
+function! ClearHighlight()
+  let @/ = ""
+endfunction
+
+function! ListFilesInCurrentDir()
+  execute "Files"." ".expand("%:h")
+endfunction
+
+function! CopyCurrentPath()
+  let @*=expand("%:p") | echo expand("%:p")
+endfunction
+
+function! CopyCurrentFileName()
+  let @*=expand("%:t") | echo expand("%:t")
+endfunction
+
 " General
-Plug 'hecal3/vim-leader-guide'
+Plug 'liuchengxu/vim-which-key'
 Plug 'scrooloose/nerdtree'
 
 " UI
@@ -55,78 +71,100 @@ Plug 'tpope/vim-fugitive'
 call plug#end()
 
 "========================================================
-" MAPPING leader guide
+" MAPPING which key (leader guide)
 "========================================================
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+
+
 " Define prefix dictionary
-let g:lmap =  {}
+let g:which_key_map =  {}
+let g:which_key_map.s = {
+      \ 'name' : 'search'                                            ,
+      \ 'p' : ['Ag'     , 'Ag search']       ,
+      \ 'b' : ['Buffers'     , 'Buffers']       ,
+      \ 'c' : ['ClearHighlight()'     , 'Clear highlight']       ,
+      \ 'a' : {
+         \ 'name': 'ag',
+         \ 'a' : ['Ag'     , 'Ag search']       ,
+         \ 'd' : ['AgD' , 'Ag current dir']  ,
+      \ },
+      \ }
 
-" Multilevel dictionaries:
-let g:lmap.s = { 'name' : 'Search' }
-let g:lmap.s.f = ['Files', 'Files search']
-let g:lmap.s.a = { 'name' : 'Ag search' }
-let g:lmap.s.a.a = ['Ag', 'Ag search']
-let g:lmap.s.a.d = ['AgD','Ag current dir']
-let g:lmap.s.b = ['Buffers', 'Buffers']
-let g:lmap.s.c = ['let @/ = ""', 'Clear highlight']
+let g:which_key_map.b = {
+      \ 'name' : 'buffers'                                            ,
+      \ 'b' : ['Buffers'     , 'Show buffers']       ,
+      \ }
 
-let g:lmap.f = { 'name' : 'File Menu' }
-let g:lmap.f.n = ['call NERDTreeToggleInCurDir()','NERD tree']
-let g:lmap.f.f = ['execute "Files"." ".expand("%:h")','Files in current dir']
-let g:lmap.f.y = ['let @*=expand("%:p") | echo expand("%:p")', 'Copy current path']
-let g:lmap.f.Y = ['let @*=expand("%:t") | echo expand("%:t")', 'Copy current filename']
-let g:lmap.f.q = ['q', 'Quit']
-let g:lmap.f.Q = ['qa', 'Quit all']
+let g:which_key_map.f = {
+      \ 'name' : 'files'                                            ,
+      \ 'n' : ['NERDTreeToggleInCurDir()'     , 'NERD tree']       ,
+      \ 'f' : ['ListFilesInCurrentDir()'     , 'Files in current dir']       ,
+      \ 'y' : ['CopyCurrentPath()'     , 'Copy current path']       ,
+      \ 'Y' : ['CopyCurrentFileName()'     , 'Copy current filename']       ,
+      \ 'q' : ['q'     , 'Quit']       ,
+      \ 'Q' : ['qa'     , 'Quit all']       ,
+      \ }
 
-let g:lmap.g = { 'name' : 'Git' }
-let g:lmap.g.b = ['Gblame','Blame']
+let g:which_key_map.g = {
+      \ 'name' : 'git'                                            ,
+      \ 'b' : ['Gblame'     , 'Blame']       ,
+      \ }
 
-let g:lmap.p = { 'name' : 'Projects' }
-let g:lmap.p.f = ['Files', 'Files search']
+let g:which_key_map.p = {
+      \ 'name' : 'projects'                                            ,
+      \ 'f' : ['Files'     , 'Files search']       ,
+      \ }
 
-let g:lmap.t = { 'name' : 'Tabs/Toggles' }
-let g:lmap.t.n = ['tab sp', 'New tab']
-let g:lmap.t.l = ['tabnext', 'Next tab']
-let g:lmap.t.h = ['tabprev', 'Previous tab']
-let g:lmap.t.j = ['tabfirst', 'First tab']
-let g:lmap.t.k = ['tablast', 'Last tab']
-let g:lmap.t.c = ['tabclose', 'Close tab']
-let g:lmap.t.1 = ['call feedkeys("1gt")', 'Tab 1']
-let g:lmap.t.2 = ['call feedkeys("2gt")', 'Tab 2']
-let g:lmap.t.3 = ['call feedkeys("3gt")', 'Tab 3']
-let g:lmap.t.4 = ['call feedkeys("4gt")', 'Tab 4']
-let g:lmap.t.t = { 'name' : 'Toggles' }
-let g:lmap.t.t.a = ['call deoplete#toggle()', 'Auto completion']
-let g:lmap.t.t.i = ['IndentLinesToggle', 'Indent guide']
+let g:which_key_map.t = {
+      \ 'name' : 'tabs/toggles'                                            ,
+      \ 'n' : [':tab sp', 'New tab'],
+      \ 'l' : ['tabnext', 'Next tab'],
+      \ 'h' : ['tabprev', 'Previous tab'],
+      \ 'j' : ['tabfirst', 'First tab'],
+      \ 'k' : ['tablast', 'Last tab'],
+      \ 'c' : ['tabclose', 'Close tab'],
+      \ '1' : ['feedkeys("1gt")', 'Tab 1'],
+      \ '2' : ['feedkeys("2gt")', 'Tab 2'],
+      \ '3' : ['feedkeys("3gt")', 'Tab 3'],
+      \ '4' : ['feedkeys("4gt")', 'Tab 4'],
+      \ 't' : {
+         \ 'name': 'toggles',
+         \ 'a' : ['deoplete#toggle()'     , 'Auto completion'],
+         \ 'i' : ['IndentLinesToggle' , 'Indent guide'],
+         \ },
+      \ }
 
-let g:lmap.w = { 'name' : 'Windows' }
-let g:lmap.w = {
-      \'name' : 'Windows',
-      \'/' : ['vsplit', 'Split window right'],
-      \'s' : ['split', 'Split window bellow'],
-      \'l' : ['call feedkeys("\<C-W>l")', 'Window right'],
-      \'h' : ['call feedkeys("\<C-W>h")', 'Window left'],
-      \'j' : ['call feedkeys("\<C-W>j")', 'Window down'],
-      \'k' : ['call feedkeys("\<C-W>k")', 'Window up'],
-      \'=' : ['call feedkeys("\<C-W>=")', 'Balance windows'],
-      \'d' : ['call feedkeys("\<C-W>c")', 'Close window']
-      \}
+let g:which_key_map.w = {
+      \ 'name' : 'windows'                                            ,
+      \ 'f' : ['Files'     , 'Files search']       ,
+      \ '/' : ['vsplit', 'Split window right'],
+      \ 's' : ['split', 'Split window bellow'],
+      \ 'l' : ['call feedkeys("\<C-W>l")', 'Window right'],
+      \ 'h' : ['call feedkeys("\<C-W>h")', 'Window left'],
+      \ 'j' : ['call feedkeys("\<C-W>j")', 'Window down'],
+      \ 'k' : ['call feedkeys("\<C-W>k")', 'Window up'],
+      \ '=' : ['call feedkeys("\<C-W>=")', 'Balance windows'],
+      \ 'd' : ['call feedkeys("\<C-W>c")', 'Close window'],
+      \ 'r' : {
+         \ 'name': 'resize',
+         \ 'l' : [':call feedkeys("\<C-W>\>")', 'Increase width'],
+         \ 'h' : [':call feedkeys("\<C-W>\<")', 'Decrease width'],
+         \ 'k' : [':call feedkeys("\<C-W>+")', 'Increase height'],
+         \ 'j' : [':call feedkeys("\<C-W>-")', 'Decrease height'],
+         \ 'm' : [':res +1000 | vertical res 100', 'Maximize window size'],
+         \ },
+      \ }
 
-let g:lmap.w.r = { 'name' : 'Resize' }
-let g:lmap.w.r.l = ['call feedkeys("\<C-W>\>")', 'Increase width']
-let g:lmap.w.r.h = ['call feedkeys("\<C-W>\<")', 'Decrease width']
-let g:lmap.w.r.k = ['call feedkeys("\<C-W>+")', 'Increase height']
-let g:lmap.w.r.j = ['call feedkeys("\<C-W>-")', 'Decrease height']
-let g:lmap.w.r.m = ['res +1000 | vertical res 100', 'Maximize window size']
+let g:which_key_map.j = {
+      \ 'name' : 'jump'                                            ,
+      \ 'g' : [':call GenerateCTAGS()', 'Generate CTAGS'],
+      \ 't' : [':call feedkeys("\<C-]>")', 'To definition'],
+      \ }
 
-let g:lmap.j = { 'name' : 'Jump' }
-let g:lmap.j.g = ['call GenerateCTAGS()', 'Generate CTAGS']
-let g:lmap.j.t = ['call feedkeys("\<C-]>")', 'To definition']
-
-let mapleader=" "
-
-call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-nnoremap <silent> <leader> :<c-u>LeaderGuide '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>LeaderGuideVisual '<Space>'<CR>
+call which_key#register('<Space>', "g:which_key_map")
 
 "========================================================
 " EDITOR CONFIGS
