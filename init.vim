@@ -185,6 +185,7 @@ call which_key#register('<Space>', "g:which_key_map")
 "========================================================
 set clipboard=unnamed
 set mouse=a "Mouse scroll
+set termguicolors "True color for neovim
 set ruler
 set ai "Auto indent
 set number " Show line numbers
