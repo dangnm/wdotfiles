@@ -165,6 +165,9 @@ let g:which_key_map.j = {
       \ 'name' : 'jump'                                            ,
       \ 'g' : [':call GenerateCTAGS()', 'Generate CTAGS'],
       \ 't' : [':call feedkeys("\<C-]>")', 'To definition'],
+      \ 'l' : ['<Plug>(easymotion-overwin-line)', 'Go to line'],
+      \ 'w' : ['<Plug>(easymotion-overwin-w)', 'Go to word'],
+      \ '/' : ['<Plug>(easymotion-sn)', 'Ez motion search'],
       \ }
 
 let g:which_key_map.z = {
@@ -181,6 +184,7 @@ call which_key#register('<Space>', "g:which_key_map")
 " EDITOR CONFIGS
 "========================================================
 set clipboard=unnamed
+set mouse=a "Mouse scroll
 set ruler
 set ai "Auto indent
 set number " Show line numbers
@@ -236,8 +240,6 @@ endif
 if s:CheckPlugged('vim-easymotion')
   let g:EasyMotion_do_mapping = 0
   let g:EasyMotion_smartcase = 1
-  map / <Plug>(easymotion-sn)
-  omap / <Plug>(easymotion-tn)
 endif
 
 " ===========ALE config===============
