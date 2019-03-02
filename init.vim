@@ -68,6 +68,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-signify' "Sign column to indicate added, modified and removed lines
 Plug 'tpope/vim-fugitive'
 
+" Other tools
+Plug 'jceb/vim-orgmode'
+
 call plug#end()
 
 "========================================================
@@ -162,6 +165,14 @@ let g:which_key_map.j = {
       \ 'name' : 'jump'                                            ,
       \ 'g' : [':call GenerateCTAGS()', 'Generate CTAGS'],
       \ 't' : [':call feedkeys("\<C-]>")', 'To definition'],
+      \ }
+
+let g:which_key_map.z = {
+      \ 'name' : 'zoom'                                            ,
+      \ 'c' : ['zc', 'close fold(zc)'],
+      \ 'o' : ['zo', 'open fold(zo)'],
+      \ 'M' : ['zM', 'close all folds(zM)'],
+      \ 'R' : ['zR', 'open all folds(zR)'],
       \ }
 
 call which_key#register('<Space>', "g:which_key_map")
